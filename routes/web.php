@@ -14,3 +14,15 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::middleware('auth')->post('/teams', function () {
+    $attributes = request()->validate(['name' => 'required']);
+
+    auth()->user()->team()->create($attributes);
+
+    return redirect('/');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
